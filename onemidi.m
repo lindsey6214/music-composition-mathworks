@@ -62,5 +62,48 @@ options = trainingOptions('adam', ...
 % Train the LSTM model
 net = trainNetwork(X, Y, layers, options);
 
-% Predict using the trained LSTM network
-YPred = predict(net, X);
+% Initialize parameters for generation
+numGeneratedSteps = 500;  % Number of notes to generate
+generatedSequence = zeros(2, numGeneratedSteps);  % Initialize with zeros
+generatedSequence(:, 1) = sequenceData(:, 1);  % Start with the first timestep of the original sequence
+
+% Generate new notes using the LSTM model
+for t = 2:numGeneratedSteps
+    % Reshape the last generated note for prediction
+    YPred = predict(net, reshape(generatedSequence(:, t-1), [2, 1]), 'MiniBatchSize', 1);
+    generatedSequence(:, t) = YPred;  % Store predicted note
+end
+
+% Denormalize the generated notes back to the original scale
+noteNumbersGen = (generatedSequence(1, :) * (max(oneMidiData.NoteNumber) - min(oneMidiData.NoteNumber))) + min(oneMidiData.NoteNumber);
+velocitiesGen = (generatedSequence(2, :) * (max(oneMidiData.Velocity) - min(oneMidiData.Velocity))) + min(oneMidiData.Velocity);
+
+% Prepare MIDI structure
+midi = struct();
+midi.format = 1;  % Format 1: Multiple tracks, synchronized
+midi.ticks_per_quarter_note = 480;  % Example value, adjust as needed
+midi.track = {};  % Initialize as a cell array
+
+% Create a track for the generated MIDI
+trackMessages = struct('type', {}, 'chan', {}, 'deltatime', {}, 'data', {});  % Initialize track messages
+
+% Create MIDI messages from generated notes
+for i = 1:numGeneratedSteps
+    % Create note-on message
+    noteOnMsg = struct('type', 144, 'chan', 1, ...
+                       'deltatime', 0, ...
+                       'data', [round(noteNumbersGen(i)), round(velocitiesGen(i))]);
+    trackMessages(end + 1) = noteOnMsg;  % Add note-on message
+
+    % Add a note-off message after a certain duration (e.g., 480 ticks)
+    noteOffMsg = struct('type', 128, 'chan', 1, ...
+                        'deltatime', 480, ...
+                        'data', [round(noteNumbersGen(i)), 0]);
+    trackMessages(end + 1) = noteOffMsg;  % Add note-off message
+end
+
+% Store messages in the first track
+midi.track{1}.messages = trackMessages;  % Store messages in the first track
+
+filename = 'generated_song.mid';  % Specify the filename
+writemidi(midi, filename); % Call the function to write MIDI data to file
