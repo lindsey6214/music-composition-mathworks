@@ -1,16 +1,23 @@
 % Read midi data from file
-midiData = readmidi('A., Jag, Je taime Juliette, OXC7Fd0ZN8o.mid');
+midiData = readmidi("A., Jag, Je t'aime Juliette, OXC7Fd0ZN8o.mid");
 
 deltaTime = [midiData.track(2).messages.deltatime] 
 data = [midiData.track(2).messages.data] 
 
 % To be continued:
-% Prepare input-output pairs for LSTM training
+% Prepare input-output sequences (e.g., sequences of 50 notes)
+sequenceLength = 50;
 X = [];
 Y = [];
 
+for i = 1:(length(data) - sequenceLength)
+    X = [X; normalizedPitches(i:i+sequenceLength-1)'];  % Input sequence
+    Y = [Y; normalizedPitches(i+sequenceLength)];       % Next note to predict
+end
+
 % Loop through the data to create sequences
-X = [deltaTime];  % Input sequence of deltaTime and notePitches
+for i:
+X = [deltaTime, data];  % Input sequence of deltaTime and notePitches
 Y = [];  % Output is the next note to predict
 end
 
