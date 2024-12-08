@@ -1,3 +1,4 @@
+% Original function to generate midi file from onemidi LSTM output.
 function write_midi_from_struct(filename, midi)
     % Open the file in write mode
     fid = fopen(filename, 'w', 'b');  % 'b' for binary mode
