@@ -1,3 +1,4 @@
+% Imported function from https://github.com/kts/matlab-midi/blob/master/src/writemidi.m
 function midi = readmidi(filename, rawbytes)
 % midi = readmidi(filename, rawbytes)
 % midi = readmidi(filename)
