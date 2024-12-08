@@ -1,4 +1,5 @@
-
+% Function to generate midi file from the polymidisLSTM's generated
+% sequence. Used in polymidisLSTM for song generation.
 function writemidiPoly(midi, filename)
     % WRITEMIDI Writes a MIDI structure to a file
     %   midi: Structure containing MIDI data
