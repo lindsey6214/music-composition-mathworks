@@ -1,16 +1,16 @@
-% Marie Elster, Group 22
-% November 20 2024
-% Mathworks Music Composition using 20 Polyphonic midis
+% Group 22 Mathworks
+% November 2024
+% Generative LSTM model from n polyphonic song files (monophonic output)
 
 % ---- Fetch input data, extract first n files from midi ---
-
+sourceFolder = "midis";
 % Create the datastore
 midiDatastore = fileDatastore(sourceFolder, "ReadFcn", @readmidi);
 len = length('/Users/mcelster/Desktop/Mathworks Music/matlab-music-comp/midis/');
 
-n = 100 % number of input songs
+n = 200 % number of input songs
 
-%Iterate through mididatastore object, collect number of desired files
+%Iterate through mididatastore object, collect number of desired filesu
 midiFiles = strings(n);
 for i = 2:n+1 %length(midiDatastore.Files)
     name = midiDatastore.Files{i}(len+1:end);
@@ -56,11 +56,11 @@ noteNumbersNorm = (allNoteNumbers - min(allNoteNumbers)) / ...
 velocitiesNorm = (allVelocities - min(allVelocities)) / ...
                  (max(allVelocities) - min(allVelocities));
 
-% ---- Adjust Input and Output for Polyphony -----
+% ---- Adjust Input and Output for Polyphony (needs revision) -----
 
 % Group notes by unique delta times
 [uniqueTimes, ~, idx] = unique(allDeltaTimes);
-maxNotesPerStep = 10;  % Adjust based on your dataset
+maxNotesPerStep = 10;  % Adjust based on dataset
 
 groupedNotes = zeros(maxNotesPerStep, length(uniqueTimes));
 groupedVelocities = zeros(maxNotesPerStep, length(uniqueTimes));
@@ -111,14 +111,6 @@ options = trainingOptions('adam', ...
     'Shuffle', 'never', ...
     'Verbose', 0, ...
     'Plots', 'training-progress');
-% Training options #2
-%{
-trainingOptions( 'adam', ...
-    'MiniBatchSize', 1, ...
-    'GradientThreshold', 1, ...
-    'MaxEpochs', 25, ...
-    'Plots', 'training-progress');
-%}
 
 % Train the LSTM model
 net = trainNetwork(X, Y, layers, options);
@@ -126,7 +118,7 @@ net = trainNetwork(X, Y, layers, options);
 % ---- Generate Multiple Notes Per Step ----
 
 % Initialize parameters for generation
-numGeneratedSteps = 200;
+numGeneratedSteps = 100;
 generatedSequence = zeros(numFeatures, numGeneratedSteps);
 generatedSequence(:, 1) = sequenceData(:, 1);  % Start with the first timestep
 
@@ -180,8 +172,8 @@ end
 % Store messages in the first track
 midi.track{1}.messages = trackMessages;
 
-% Write the MIDI file
-write_midi_from_struct('monoSong', midi);
+% Write the MIDI file 
 writemidiPoly(midi, 'polySong.mid');
 
 disp(['MIDI file generated.']);
+
