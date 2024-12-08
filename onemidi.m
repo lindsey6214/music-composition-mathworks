@@ -1,3 +1,8 @@
+% Group 22 Mathworks
+% October 2024
+% Generative LSTM model from one song file (monophonic output)
+% This code reads the first file of the midi dataset. LSTM uses ONE song file
+
 midiData = readmidi("A., Jag, Je t'aime Juliette, OXC7Fd0ZN8o.mid");
 
 trackMessages = midiData.track(2).messages;
