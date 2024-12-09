@@ -84,9 +84,7 @@ Generated music was saved as MIDI files for playback evaluation.
 2. Ensure MATLAB is installed with:  
 - Deep Learning Toolbox  
 - Audio Toolbox  
-3. Add the repository folder to MATLAB's path:
-  ```bash
-  addpath(genpath('path_to_repository'))
+3. Add the repository folder to MATLAB's path
 4. Download desired MIDI dataset, and make sure folder of midis are added to MATLAB path.
 
 ## Usage  
@@ -105,9 +103,11 @@ Contributions are welcome! Please follow these steps:
 2. Create a feature branch:
    ```bash
     git checkout -b feature-name
+   ```
 4. Commit your changes:
    ```bash
     git commit -m "Description of changes"
+   ```
 6. Submit a pull request for review
 
 ## License
@@ -115,8 +115,7 @@ This project is licensed under the Apache License, Version 2.0. Feel free to use
 
 ## Credits and Acknowledgments
 Contributors
-- Project Lead: Marie Elster
-- Collaborators: Erynn Gutierrez, Isabella Juhaeri, Lindsey McGovern, Chenlu Wang
+- Project Team: Marie Elster, Erynn Gutierrez, Isabella Juhaeri, Lindsey McGovern, Chenlu Wang
 - AI Challenge Advisor (Mathworks): Maiteyi Chitale
 - AI Studio TA (BTTAI Studio): George Abu Doud
 Tools and Libraries
