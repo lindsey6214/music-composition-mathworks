@@ -1,11 +1,8 @@
-# matlab-music-comp
-Break Through Tech AI Studio Project 2024: Music Composition with MATLAB
-
-Using MATLAB's Deep Learning Toolbox and the Audio Toolbox, we analyzed and implemented LSTMs and Deep Learning Techniques to generate a model capable of composing and playing back music. 
-
 # MATLAB Generative Music Composer
 
-A generative model leveraging MATLAB's **Deep Learning Toolbox** and **Audio Toolbox** to compose and play back melodies. The project combines the power of LSTM networks with MIDI data to create music that captures the essence of polyphonic compositions.
+Break Through Tech AI Studio Project 2024: Music Composition with MATLAB
+
+Using MATLAB's **Deep Learning Toolbox** and **Audio Toolbox**, we analyzed and implemented LSTMs and Deep Learning Techniques to generate a model capable of composing and playing back music. The project combines the power of LSTM networks with MIDI data to create music that captures the essence of polyphonic compositions.
 
 ## Table of Contents
 - [Project Overview](#project-overview)
@@ -117,8 +114,10 @@ This project is licensed under the Apache License, Version 2.0. Feel free to use
 Contributors
 - Project Team: Marie Elster, Erynn Gutierrez, Isabella Juhaeri, Lindsey McGovern, Chenlu Wang
 - AI Challenge Advisor (Mathworks): Maiteyi Chitale
-- AI Studio TA (BTTAI Studio): George Abu Doud
+- AI Studio TA (BTTAI Studio): George Abu Doud  
+
 Tools and Libraries
 - MATLAB Deep Learning Toolbox
 - MATLAB Audio Toolbox
+- [matlab-midi by kts](https://github.com/kts/matlab-midi/tree/master?tab=readme-ov-file)
 
